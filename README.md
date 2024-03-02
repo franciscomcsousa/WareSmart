@@ -17,3 +17,12 @@
 - To exit virtual environment:
 
     ```$ deactivate```
+
+### Frontend
+
+- To enter the environment:
+
+    ```$ cd frontend/application```
+
+- To run the aplication:
+    ```$ flutter run```
