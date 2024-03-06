@@ -1,6 +1,8 @@
 # Ambient Inteligence
 
-### Backend
+## Backend
+
+### Python virtual environment
 
 - To create virtual environment:
 
@@ -18,7 +20,28 @@
 
     ```$ deactivate```
 
-### Frontend
+### Reverse proxy
+
+- Nginx file:
+```
+$ cat /etc/nginx/sites-available/smart_storage 
+server {
+  listen 80;
+  listen [::]:80;
+  
+  # server_name IP_ADDRESS; # Change this field to the machine IP address
+  
+  location / {
+    proxy_pass http://127.0.0.1:8000/;
+  }
+}
+```
+
+- **Note** - Create a link of the previous file to `sites-enabled` (remove the default one aswell):
+
+    ```$ ln -s ../sites-available/smart_storage smart_storage```
+
+## Frontend
 
 - To enter the environment:
 
