@@ -6,10 +6,13 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+
+  late Future<Sensors> futureSensor = fetchSensors();
 
   @override
   Widget build(BuildContext context) {
+    print("Built!");
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(

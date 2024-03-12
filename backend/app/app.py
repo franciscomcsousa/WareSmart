@@ -1,6 +1,12 @@
 from flask import Flask, render_template, make_response
 from flask import json
 import random
+import sys
+
+# Import communication package
+sys.path.insert(0, '../communication')
+
+from serialCommunication import fetchSensors
 
 app = Flask(__name__)
 
