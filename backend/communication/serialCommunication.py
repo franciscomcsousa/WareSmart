@@ -18,14 +18,11 @@ while True:
 	parameters = value.split()
 	if (len(parameters) > 0):
 		sensorValue = int(float(parameters[1]))
-		match parameters[0]:
-			case "T":
-				print(f"Temperature is {sensorValue}")
-				temperature = sensorValue
-			case "H":
-				print(f"Humidity is {sensorValue}")
-				humidity = sensorValue
-			case _:
-				pass
+		if parameters[0] == "T":
+			print(f"Temperature is {sensorValue}")
+			temperature = sensorValue
+		elif parameters[0] == "H":
+			print(f"Humidity is {sensorValue}")
+			humidity = sensorValue
 	time.sleep(1)
 
