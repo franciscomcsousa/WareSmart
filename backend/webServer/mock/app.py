@@ -6,7 +6,7 @@ import sys
 # Import communication package
 sys.path.insert(0, '../../communication')
 
-from serialCommunication import fetchSensors
+#from serialCommunication import fetchSensors
 
 app = Flask(__name__)
 
@@ -16,7 +16,7 @@ def home():
 
 @app.route('/sensors')
 def sensors():
-    sensors = fetchSensors()
+    #sensors = fetchSensors()
     # Humidity, Temperature and Light
     data = {
         'temperature': random.randint(1, 100),
