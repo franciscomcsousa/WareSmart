@@ -16,11 +16,12 @@ def home():
 
 @app.route('/sensors')
 def sensors():
+    sensors = fetchSensors()
     # Humidity, Temperature and Light
     data = {
-        'temperature': random.randint(1, 100),
-        'humidity': random.randint(1, 100),
-        'light': random.randint(1, 100)
+        'temperature': sensors["temperature"],
+        'humidity': sensors["humidity"],
+        'light': 25
     }   
     response = app.response_class(
         response = json.dumps(data),
@@ -28,7 +29,6 @@ def sensors():
         mimetype = 'application/json'
     )
     return response
-
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', debug=True)
