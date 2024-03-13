@@ -4,7 +4,7 @@ import random
 import sys
 
 # Import communication package
-sys.path.insert(0, '../communication')
+sys.path.insert(0, '../../communication')
 
 from serialCommunication import fetchSensors
 
