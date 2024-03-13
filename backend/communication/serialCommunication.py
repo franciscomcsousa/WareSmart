@@ -24,5 +24,3 @@ def fetchSensors():
 		if (temperature != -1 and humidity != -1):
 			break
 	return {"temperature": temperature, "humidity": humidity}
-
-fetchSensors()
