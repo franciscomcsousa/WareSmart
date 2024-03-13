@@ -1,4 +1,6 @@
 #include <dht.h>
+
+#include <dht.h>
 #include <Wire.h>
 
 // Section related with the temperature sensor
@@ -29,8 +31,9 @@ void setup() {
 void loop() {
   while (!Serial.available()); 
   x = Serial.readString().toInt(); 
-  if (x == 1)
+  if (x == 1) {
     printTemp();
+  }
   //printLight();
 }
 
