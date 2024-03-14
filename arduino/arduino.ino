@@ -1,11 +1,12 @@
 #include <dht.h>
-
-#include <dht.h>
 #include <Wire.h>
 
 // Section related with the temperature sensor
-unsigned int dhtPin = 7;
+const int dhtPin = 7;
 dht DHT;
+
+// Section related with the movement sensor
+const int  movementPin = 8;
 
 // Section related with the light sensor
 int lightSensor = 0;
@@ -23,6 +24,7 @@ int x = 0;
 void setup() {
   pinMode(dhtPin, INPUT);
   pinMode(lightPin, INPUT);
+  pinMode(movementPin, INPUT);
   Serial.begin(9600);
   Serial.setTimeout(1); 
 }
@@ -31,9 +33,14 @@ void setup() {
 void loop() {
   while (!Serial.available()); 
   x = Serial.readString().toInt(); 
-  if (x == 1) {
+  if (x == 1)
     printTemp();
+  
+  // add constraint to only send once or twice, not multiple messages
+  if(digitalRead(movementPin) == HIGH) {
+    Serial.println("M");
   }
+  //delay(1000);
   //printLight();
 }
 
