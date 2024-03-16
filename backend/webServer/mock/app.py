@@ -18,10 +18,11 @@ def home():
 def sensors():
     #sensors = fetchSensors()
     # Humidity, Temperature and Light
+    print("Sensor request")
     data = {
-        'temperature': random.randint(1, 100),
+        'temperature': random.randint(-20, 60),
         'humidity': random.randint(1, 100),
-        'light': random.randint(1, 100)
+        'light': random.randint(150, 3500)
     }   
     response = app.response_class(
         response = json.dumps(data),
