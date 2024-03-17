@@ -1,14 +1,40 @@
+import 'dart:async';
+import 'dart:convert';
 import 'dart:ffi';
 
+import 'package:application/notificationController.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'httpRequests.dart';
 
-void main() {
+void main() async {
+  await AwesomeNotifications().initialize(
+      null,
+      [
+        NotificationChannel(
+          channelKey: "movement_alert",
+          channelName: "Alert",
+          channelDescription: "Suspicious movement detected!",
+          channelGroupKey: "alert_group",
+        )
+      ],
+      channelGroups: [
+        NotificationChannelGroup(
+            channelGroupKey: "alert_group", channelGroupName: "Alert Group")
+      ],
+      debug: true);
+
+  bool isNotificationsAllowed =
+      await AwesomeNotifications().isNotificationAllowed();
+  if (!isNotificationsAllowed) {
+    AwesomeNotifications().requestPermissionToSendNotifications();
+  }
+
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +58,33 @@ class ListViewHome extends StatefulWidget {
 }
 
 class _ListViewState extends State<ListViewHome> {
+  @override
+  void initState() {
+    
+    Timer? _timer;
+
+    // Fetching sensors data every 5 seconds
+    _timer = Timer.periodic(Duration(seconds: 5), (timer) async {
+      final sensors = await fetchSensors();
+      setState(() {
+        if (sensors.movement) {
+          showMovementNotification();
+        }
+      });
+    });
+  }
+
+  void showMovementNotification() {
+    AwesomeNotifications().createNotification(
+      content: NotificationContent(
+        id: 1,
+        channelKey: "movement_alert",
+        title: "ALERT, movement detected!",
+        body: "Non-authorized movement has been detected in your storage room.",
+      ),
+    );
+  }
+  
   final titles = ["Humidity", "Temperature", "Light"];
 
   final subtitles = [
@@ -66,7 +119,7 @@ class _ListViewState extends State<ListViewHome> {
                       var snapshotList = [
                         snapshot.data!.humidity,
                         snapshot.data!.temperature,
-                        snapshot.data!.light
+                        snapshot.data!.light,
                       ];
                       reading[index] = snapshotList[index].toString();
                     } else if (snapshot.hasError) {
@@ -109,4 +162,5 @@ class _ListViewState extends State<ListViewHome> {
       },
     );
   }
+  
 }

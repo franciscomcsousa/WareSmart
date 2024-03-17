@@ -1,13 +1,14 @@
 from flask import Flask, render_template, make_response
 from flask import json
+import threading
 import random
+import time
 import sys
 
 # Import communication package
 sys.path.insert(0, '../../communication')
 
 #from serialCommunication import fetchSensors
-
 app = Flask(__name__)
 
 @app.route('/')
@@ -22,7 +23,8 @@ def sensors():
     data = {
         'temperature': random.randint(-20, 60),
         'humidity': random.randint(1, 100),
-        'light': random.randint(150, 3500)
+        'light': random.randint(150, 3500),
+        'movement': random.random() < 0.30,
     }   
     response = app.response_class(
         response = json.dumps(data),
