@@ -8,6 +8,7 @@ def fetchSensors():
 
 	humidity = -1
 	temperature = -1
+	movement = -1
 
 	print("Sensor read request")
 
@@ -16,7 +17,7 @@ def fetchSensors():
 		value = arduino.readline().decode()
 		parameters = value.split()
 
-		if (len(parameters) > 0):
+		if (len(parameters) > 1):
 			sensorValue = int(float(parameters[1]))
 			if parameters[0] == "T":
 				#print(f"Temperature is {sensorValue}")
@@ -24,10 +25,14 @@ def fetchSensors():
 			elif parameters[0] == "H":
 				#print(f"Humidity is {sensorValue}")
 				humidity = sensorValue
-			if (humidity != -1 and temperature != -1):
+			elif parameters[0] == "M":
+				movement = True if sensorValue == 1 else False
+				#print(f"Movement? {movement}")
+
+			if (humidity != -1 and temperature != -1 and movement != -1):
 				# Clean excessive requests
 				trash = arduino.readall().decode()
 				lastFetch = int(time.time())
 				break
 
-	return {"temperature": temperature, "humidity": humidity}
+	return {"temperature": temperature, "humidity": humidity, "movement": movement}

@@ -21,7 +21,8 @@ def sensors():
     data = {
         'temperature': sensors["temperature"],
         'humidity': sensors["humidity"],
-        'light': 25
+        'light': 25,
+        'movement': sensors["movement"]
     }   
     response = app.response_class(
         response = json.dumps(data),
