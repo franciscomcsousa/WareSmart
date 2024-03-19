@@ -60,23 +60,23 @@ Limit getNewLimit(Limit limit1, Limit limit2) {
 void verifyFetchedValues(Sensors sensors, Limit limitValues) {
 
   if (sensors.temperature < limitValues.minTemp || sensors.temperature > limitValues.maxTemp) {
-    showNotification("temperature", 1);
+    showNotification("temperature", 1, "Value at ${sensors.temperature}ºC.");
   }
   if (sensors.humidity < limitValues.minHum || sensors.humidity > limitValues.maxHum) {
-    showNotification("humidity", 2);
+    showNotification("humidity", 2, "Value at ${sensors.humidity}%.");
   }
   if (sensors.movement) {
-    showNotification("movement", 3);
+    showNotification("movement", 3, "Movement detected!");
   }   
 }
 
-void showNotification(String alertType, int _id) {
+void showNotification(String alertType, int id, String message) {
     AwesomeNotifications().createNotification(
       content: NotificationContent(
-        id: _id,
+        id: id,
         channelKey: "alert",
         title: "ALERT, ${alertType}!",
-        body: "There could be a problem with the ${alertType} sensor.",
+        body: "There could be a problem with the ${alertType} sensor. ${message}",
       ),
     );
 }
