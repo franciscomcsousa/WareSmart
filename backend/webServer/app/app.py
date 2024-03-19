@@ -6,10 +6,16 @@ import sys
 # Import communication package
 sys.path.insert(0, '../../communication')
 
+from serialCommunication import fetchSensors
+
+# Import bluetooth package
+sys.path.insert(0, '../../../bluetooth')
+
+from checkProximity import is_device_near
+
 # flag for movement toggle
 ignoreMovement = False
 
-from serialCommunication import fetchSensors
 
 app = Flask(__name__)
 
