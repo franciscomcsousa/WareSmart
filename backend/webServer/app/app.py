@@ -16,6 +16,7 @@ from checkProximity import is_device_near
 # flag for movement toggle
 ignoreMovement = False
 
+runProximity = False
 
 app = Flask(__name__)
 
@@ -24,10 +25,19 @@ def home():
     return render_template('home.html')
 
 @app.route('/toggleBLE')
-def toggle():
+def toggleBLE():
+    global runProximity
+    runProximity = not runProximity
+    response = app.response_class(
+        status = 200,
+        mimetype = 'application/json'
+    )
+    return response
+
+@app.route('/toggleMovement')
+def toggleMovement():
     global ignoreMovement
     ignoreMovement = not ignoreMovement
-    print(ignoreMovement)
     response = app.response_class(
         status = 200,
         mimetype = 'application/json'
@@ -38,12 +48,18 @@ def toggle():
 def sensors():
     sensors = fetchSensors()
     global ignoreMovement
+    global runProximity
+
+    nearby = False
+    # Check if someone is near the device
+    if (runProximity):
+        nearby = is_device_near()
     # Humidity, Temperature and Light
     data = {
         'temperature': sensors["temperature"],
         'humidity': sensors["humidity"],
         'light': 25,
-        'movement': False if ignoreMovement else sensors["movement"]
+        'movement': False if (ignoreMovement or nearby) else sensors["movement"]
     }   
     response = app.response_class(
         response = json.dumps(data),
