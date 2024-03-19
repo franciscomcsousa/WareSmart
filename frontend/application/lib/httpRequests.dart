@@ -1,10 +1,13 @@
 import 'dart:convert';
 
+import 'package:application/utilities.dart';
 import 'package:http/http.dart' as http;
+
+const ip = "127.0.0.1:5000";
 
 Future<Sensors> fetchSensors() async {
   final response = await http
-      .get(Uri.parse('http://127.0.0.1:5000/sensors'));
+      .get(Uri.parse('http://${ip}/sensors'));
 
 
   if (response.statusCode == 200) {
@@ -19,7 +22,7 @@ Future<Sensors> fetchSensors() async {
 }
 
 Future<void> toggleBLE() async {
-  final url = Uri.parse('http://127.0.0.1:5000/toggleBLE');
+  final url = Uri.parse('http://${ip}/toggleBLE');
   final headers = {'Content-Type': 'application/json'};
 
   final response = await http.get(url, headers: headers);
@@ -32,7 +35,7 @@ Future<void> toggleBLE() async {
 }
 
 Future<void> toggleMovement() async {
-  final url = Uri.parse('http://127.0.0.1:5000/toggleMovement');
+  final url = Uri.parse('http://${ip}/toggleMovement');
   final headers = {'Content-Type': 'application/json'};
 
   final response = await http.get(url, headers: headers);
@@ -41,39 +44,5 @@ Future<void> toggleMovement() async {
     print('Toggle movement success!');
   } else {
     print('Failed to toggle movement: ${response.statusCode}');
-  }
-}
-
-
-
-class Sensors {
-  final int temperature;
-  final int humidity;
-  final int light;
-  final bool movement;
-
-  const Sensors({
-    required this.temperature,
-    required this.humidity,
-    required this.light,
-    required this.movement
-  });
-
-  factory Sensors.fromJson(Map<String, dynamic> json) {
-    return switch (json) {
-      {
-        'temperature': int temperature,
-        'humidity': int humidity,
-        'light': int light,
-        'movement': bool movement,
-      } =>
-        Sensors(
-          temperature: temperature,
-          humidity: humidity,
-          light: light,
-          movement: movement
-        ),
-      _ => throw const FormatException('Failed to read sensors.'),
-    };
   }
 }
