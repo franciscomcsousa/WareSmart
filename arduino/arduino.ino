@@ -7,6 +7,7 @@ dht DHT;
 
 // Section related with the movement sensor
 const int  movementPin = 8;
+bool movement = false;
 
 // Section related with the light sensor
 int lightSensor = 0;
@@ -31,17 +32,23 @@ void setup() {
 
 
 void loop() {
-  while (!Serial.available()); 
+  while (!Serial.available())
+  {
+    if(digitalRead(movementPin) == HIGH)
+      movement = true;
+  } 
   x = Serial.readString().toInt(); 
-  if (x == 1)
+  if (x == 1) 
+  {
     printTemp();
-  
-  // add constraint to only send once or twice, not multiple messages
-  if(digitalRead(movementPin) == HIGH) {
-    Serial.println("M");
+    if(movement)
+    {
+      Serial.println("M 1");
+      movement = false;
+    }
+    else
+      Serial.println("M 0");
   }
-  //delay(1000);
-  //printLight();
 }
 
 void printLight()
