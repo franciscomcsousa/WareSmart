@@ -38,20 +38,79 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // initial toggle states, BLE and Movement
+    final _isBLEEnabled = ValueNotifier<bool>(false);
+    final _isMovementEnabled = ValueNotifier(true);
+
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.blue,
           title: const Text('Warehouse Monitoring'),
         ),
-        body: ListViewHome(),
+        body: ListViewHome(isBLEEnabled: _isBLEEnabled, isMovementEnabled: _isMovementEnabled),
+        drawer: NavigationDrawer(isBLEEnabled: _isBLEEnabled, isMovementEnabled: _isMovementEnabled),
+      ),
+    );
+  }
+}
+
+class NavigationDrawer extends StatefulWidget {
+  final ValueNotifier<bool> isBLEEnabled, isMovementEnabled;
+
+  const NavigationDrawer({Key? key, required this.isBLEEnabled, required this.isMovementEnabled}) : super(key: key);
+
+  @override
+  State<NavigationDrawer> createState() => _NavigationDrawerState();
+}
+
+class _NavigationDrawerState extends State<NavigationDrawer> {
+  bool _isBLEEnabled = false, _isMovementEnabled = true; // Local state copy
+
+  @override
+  void initState() {
+    super.initState();
+    // get current values
+    _isBLEEnabled = widget.isBLEEnabled.value;
+    _isMovementEnabled = widget.isMovementEnabled.value;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            SwitchListTile(
+              title: const Text('BLE proximity'),
+              value: _isBLEEnabled,
+              // update switch values
+              onChanged: (value) => setState(() {
+                _isBLEEnabled = value;
+                toggleBLE();
+              }
+              ),
+            ),
+            SwitchListTile(
+              title: const Text('Movement detection'),
+              value: _isMovementEnabled,
+              onChanged: (value) => setState(() {
+                _isMovementEnabled = value;
+                toggleMovement();
+              }),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
 
 class ListViewHome extends StatefulWidget {
-  ListViewHome({super.key});
+  final ValueNotifier<bool> isBLEEnabled, isMovementEnabled;
+
+  const ListViewHome({Key? key, required this.isBLEEnabled, required this.isMovementEnabled}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _ListViewState();

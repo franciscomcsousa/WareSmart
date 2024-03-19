@@ -18,6 +18,34 @@ Future<Sensors> fetchSensors() async {
   }
 }
 
+Future<void> toggleBLE() async {
+  final url = Uri.parse('http://127.0.0.1:5000/toggleBLE');
+  final headers = {'Content-Type': 'application/json'};
+
+  final response = await http.get(url, headers: headers);
+
+  if (response.statusCode == 200) {
+    print('ToggleBLE success!');
+  } else {
+    print('Failed to toggle BLE: ${response.statusCode}');
+  }
+}
+
+Future<void> toggleMovement() async {
+  final url = Uri.parse('http://127.0.0.1:5000/toggleMovement');
+  final headers = {'Content-Type': 'application/json'};
+
+  final response = await http.get(url, headers: headers);
+
+  if (response.statusCode == 200) {
+    print('Toggle movement success!');
+  } else {
+    print('Failed to toggle movement: ${response.statusCode}');
+  }
+}
+
+
+
 class Sensors {
   final int temperature;
   final int humidity;
