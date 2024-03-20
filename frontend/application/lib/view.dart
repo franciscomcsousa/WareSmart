@@ -1,33 +1,30 @@
 import 'dart:async';
 
+import 'package:application/drawer.dart';
 import 'package:application/httpRequests.dart';
 import 'package:application/utilities.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ViewHome extends StatefulWidget {
-  final ValueNotifier<bool> isBLEEnabled, isMovementEnabled;
-   final Limit limitValues;
 
-  const ViewHome({Key? key, required this.isBLEEnabled, required this.isMovementEnabled, required this.limitValues}) : super(key: key);
+  const ViewHome({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _ListViewState();
 }
 
 class _ListViewState extends State<ViewHome> {
-  Limit _limitValues = Limit(minTemp: 0, maxTemp: 50, minHum: 0, maxHum: 80);
   
   @override
   void initState() {
-    
-    // get current max/min values
-    _limitValues = widget.limitValues;
+    final ObjectPresentState _isObjectPresentState = Provider.of<ObjectPresentState>(context);
 
     Timer? _timer;
     // Fetching all sensors data every 5 seconds
-    _timer = Timer.periodic(Duration(seconds: 5), (timer) async {
+    _timer = Timer.periodic(const Duration(seconds: 5), (timer) async {
       final sensors = await fetchSensors();
-      setState(() => verifyFetchedValues(sensors, _limitValues));
+      setState(() => verifyFetchedValues(sensors, _isObjectPresentState.limitValues));
     });
   }
   

@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:application/utilities.dart';
 import 'package:http/http.dart' as http;
 
-const ip = "127.0.0.1:5000";
+const ip = "192.168.107.118";
 
 Future<Sensors> fetchSensors() async {
   final response = await http
@@ -21,11 +21,12 @@ Future<Sensors> fetchSensors() async {
   }
 }
 
-Future<void> toggleBLE() async {
+Future<void> toggleBLE(bool isEnabled) async {
   final url = Uri.parse('http://${ip}/toggleBLE');
   final headers = {'Content-Type': 'application/json'};
+  final body = jsonEncode({'value': isEnabled});
 
-  final response = await http.get(url, headers: headers);
+  final response = await http.post(url, headers: headers, body:body);
 
   if (response.statusCode == 200) {
     print('ToggleBLE success!');
@@ -34,11 +35,12 @@ Future<void> toggleBLE() async {
   }
 }
 
-Future<void> toggleMovement() async {
+Future<void> toggleMovement(bool isEnabled) async {
   final url = Uri.parse('http://${ip}/toggleMovement');
   final headers = {'Content-Type': 'application/json'};
+  final body = jsonEncode({'value': isEnabled});
 
-  final response = await http.get(url, headers: headers);
+  final response = await http.post(url, headers: headers, body: body);
 
   if (response.statusCode == 200) {
     print('Toggle movement success!');
