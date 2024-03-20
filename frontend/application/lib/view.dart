@@ -15,15 +15,19 @@ class ViewHome extends StatefulWidget {
 }
 
 class _ListViewState extends State<ViewHome> {
-    Limit _limitValues = Limit(minTemp: 0, maxTemp: 50, minHum: 0, maxHum: 80);
   
+  Timer? _timer;
+
   @override
   void initState() {
-    Timer? _timer;
-    // Fetching all sensors data every 5 seconds
+    super.initState();
     _timer = Timer.periodic(const Duration(seconds: 5), (timer) async {
       final sensors = await fetchSensors();
-      setState(() => verifyFetchedValues(sensors, _limitValues));
+      setState(() {
+        // no need to listen in the viewHome, because it only changes in the Drawer
+        final objectPresentState = Provider.of<ObjectPresentState>(context, listen: false); 
+        verifyFetchedValues(sensors, objectPresentState.limitValues);
+      });
     });
   }
   
@@ -43,8 +47,6 @@ class _ListViewState extends State<ViewHome> {
 
   @override
   Widget build(BuildContext context) {
-    //final ObjectPresentState _isObjectPresentState = Provider.of<ObjectPresentState>(context);
-
     return ListView.builder(
       padding: const EdgeInsets.all(8),
       scrollDirection: Axis.vertical,
@@ -65,6 +67,7 @@ class _ListViewState extends State<ViewHome> {
                         snapshot.data!.temperature,
                         snapshot.data!.light,
                       ];
+
                       reading[index] = snapshotList[index].toString();
                     } else if (snapshot.hasError) {
                       ScaffoldMessenger.of(context).showSnackBar(
