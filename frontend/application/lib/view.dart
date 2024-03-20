@@ -32,10 +32,10 @@ class _ListViewState extends State<ViewHome> {
   final subtitles = [
     "Percentage of humidity",
     "Temperature in Celsius degrees",
-    "Light level in lumens"
+    "Light level in relative percentage"
   ];
 
-  final units = ["%", "°C", "lm"];
+  final units = ["%", "°C", "%"];
 
   final reading = ["...", "...", "..."];
 
