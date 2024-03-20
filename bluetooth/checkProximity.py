@@ -1,10 +1,12 @@
+homeDir = "/home/framboesa/SmartStorage/AmbientIntelligence/backend/"
+
 def rssiToDistance(rssi):    
     n = 2
     mp = -69
     return round(10 ** ((mp - (int(rssi)))/(10 * n)),2)
 
 def is_device_near():
-    file = open('../../../bluetooth/rssi.txt', 'r')
+    file = open(f"{homeDir}bluetooth/rssi.txt", 'r')
     lines = file.readlines()
 
     if (len(lines) < 2):
