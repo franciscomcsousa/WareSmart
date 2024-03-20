@@ -8,6 +8,7 @@ def fetchSensors():
 
 	humidity = -1
 	temperature = -1
+	light = -1
 	movement = -1
 
 	print("Sensor read request")
@@ -25,6 +26,9 @@ def fetchSensors():
 			elif parameters[0] == "H":
 				#print(f"Humidity is {sensorValue}")
 				humidity = sensorValue
+			elif parameters[0] == "L":
+				#print(f"Light is {sensorValue}")
+				light = sensorValue
 			elif parameters[0] == "M":
 				movement = True if sensorValue == 1 else False
 				#print(f"Movement? {movement}")
@@ -35,4 +39,4 @@ def fetchSensors():
 				lastFetch = int(time.time())
 				break
 
-	return {"temperature": temperature, "humidity": humidity, "movement": movement}
+	return {"temperature": temperature, "humidity": humidity, "light": light, "movement": movement}

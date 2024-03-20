@@ -66,7 +66,7 @@ def sensors():
     data = {
         'temperature': sensors["temperature"],
         'humidity': sensors["humidity"],
-        'light': 25,
+        'light': sensors["temperature"],
         'movement': False if ((not runMovement) or nearby) else sensors["movement"]
     }   
     response = app.response_class(
