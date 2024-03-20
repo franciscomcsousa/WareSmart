@@ -15,16 +15,15 @@ class ViewHome extends StatefulWidget {
 }
 
 class _ListViewState extends State<ViewHome> {
+    Limit _limitValues = Limit(minTemp: 0, maxTemp: 50, minHum: 0, maxHum: 80);
   
   @override
   void initState() {
-    final ObjectPresentState _isObjectPresentState = Provider.of<ObjectPresentState>(context);
-
     Timer? _timer;
     // Fetching all sensors data every 5 seconds
     _timer = Timer.periodic(const Duration(seconds: 5), (timer) async {
       final sensors = await fetchSensors();
-      setState(() => verifyFetchedValues(sensors, _isObjectPresentState.limitValues));
+      setState(() => verifyFetchedValues(sensors, _limitValues));
     });
   }
   
@@ -44,6 +43,8 @@ class _ListViewState extends State<ViewHome> {
 
   @override
   Widget build(BuildContext context) {
+    //final ObjectPresentState _isObjectPresentState = Provider.of<ObjectPresentState>(context);
+
     return ListView.builder(
       padding: const EdgeInsets.all(8),
       scrollDirection: Axis.vertical,
