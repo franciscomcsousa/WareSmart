@@ -41,6 +41,7 @@ void loop() {
   if (x == 1) 
   {
     printTemp();
+    printLight();
     if(movement)
     {
       Serial.println("M 1");
@@ -54,8 +55,10 @@ void loop() {
 void printLight()
 {
   lightSensor = analogRead(lightPin);
-  lightMapped = map(lightSensor, lightMin, lightMax, 0, 255);
-  //Serial.println(lightMapped);
+  lightMapped = map(lightSensor, lightMin, lightMax, 0, 100);
+  Serial.print("L ");
+  lightMapped = 50;
+  Serial.println(lightMapped);
 }
 
 void printTemp()
