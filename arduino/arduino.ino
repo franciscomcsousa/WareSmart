@@ -41,6 +41,7 @@ void loop() {
   if (x == 1) 
   {
     printTemp();
+    printLight();
     if(movement)
     {
       Serial.println("M 1");
