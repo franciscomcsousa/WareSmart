@@ -1,6 +1,10 @@
+import 'dart:ffi';
 import 'dart:math';
+import 'dart:async';
 
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:application/view.dart';
+import 'package:flutter/material.dart';
 
 class Limit {
   final int minTemp;
@@ -57,17 +61,28 @@ Limit getNewLimit(Limit limit1, Limit limit2) {
   );
 }
 
-void verifyFetchedValues(Sensors sensors, Limit limitValues) {
+List<bool> verifyFetchedValues(Sensors sensors, Limit limitValues, List<bool> alertsPresent) {
 
   if (sensors.temperature < limitValues.minTemp || sensors.temperature > limitValues.maxTemp) {
-    showNotification("temperature", 1, "Value at ${sensors.temperature}ºC.");
+    if (alertsPresent.elementAt(0) == false) {
+      showNotification("temperature", 1, "Value at ${sensors.temperature}ºC.");
+      alertsPresent[0] = true;
+    }
   }
   if (sensors.humidity < limitValues.minHum || sensors.humidity > limitValues.maxHum) {
-    showNotification("humidity", 2, "Value at ${sensors.humidity}%.");
+    if (alertsPresent.elementAt(1) == false) {
+      showNotification("humidity", 2, "Value at ${sensors.humidity}%.");
+      alertsPresent[1] = true;
+    }
   }
   if (sensors.movement) {
-    showNotification("movement", 3, "Movement detected!");
-  }   
+    if (alertsPresent.elementAt(2) == false) {
+      showNotification("movement", 3, "Movement detected!");
+      alertsPresent[2] = true;
+    }
+  }
+
+  return alertsPresent;
 }
 
 void showNotification(String alertType, int id, String message) {

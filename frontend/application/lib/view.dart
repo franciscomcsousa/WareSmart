@@ -18,16 +18,22 @@ class _ListViewState extends State<ViewHome> {
   
   Timer? _timer;
 
+  var alertsPresent = [false, false, false];
+
   @override
   void initState() {
     super.initState();
     _timer = Timer.periodic(const Duration(seconds: 5), (timer) async {
+      print("ALERTS PRESENT: ${alertsPresent}");
       final sensors = await fetchSensors();
       setState(() {
         // no need to listen in the viewHome, because it only changes in the Drawer
         final objectPresentState = Provider.of<ObjectPresentState>(context, listen: false); 
-        verifyFetchedValues(sensors, objectPresentState.limitValues);
+        alertsPresent = verifyFetchedValues(sensors, objectPresentState.limitValues, alertsPresent);
       });
+    });
+    final timer = Timer.periodic(const Duration(seconds: 20), (timer) async {
+      alertsPresent[0] = alertsPresent[1] = alertsPresent[2] = false;
     });
   }
   
