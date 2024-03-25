@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:application/utilities.dart';
 import 'package:http/http.dart' as http;
 
-const ip = "192.168.107.118";
+const ip = "127.0.0.1:5000";
 
 Future<Sensors> fetchSensors() async {
   final response = await http
