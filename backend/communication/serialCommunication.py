@@ -18,8 +18,6 @@ def fetchSensors():
 		value = arduino.readline().decode()
 		parameters = value.split()
 
-		print(f"value: {value}")
-
 		if (len(parameters) > 1):
 			sensorValue = int(float(parameters[1]))
 			if parameters[0] == "T":

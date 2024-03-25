@@ -12,7 +12,7 @@ bool movement = false;
 // Section related with the light sensor
 int lightSensor = 0;
 int lightMapped = 0;
-int lightPin = 6;
+int lightPin = A1;
 
 // Minimum and maximum values for the light
 // Value Max corresponds to the sensor value when close to a ceiling lamp
@@ -57,7 +57,6 @@ void printLight()
   lightSensor = analogRead(lightPin);
   lightMapped = map(lightSensor, lightMin, lightMax, 0, 100);
   Serial.print("L ");
-  lightMapped = 50;
   Serial.println(lightMapped);
 }
 
