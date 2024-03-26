@@ -1,9 +1,30 @@
 # WareSmart - A smart warehouse hazard detection
 
 ### Work done by:
-- Francisco Sousa
-- Miguel Porfírio
-- Sara Aguincha
+- [Francisco Sousa](https://github.com/franciscomcsousa)
+- [Miguel Porfírio](https://github.com/miguelporfirio19)
+- [Sara Aguincha](https://github.com/SaraAguincha)
+
+This work was done for the [Ambient Intelligence](https://fenix.tecnico.ulisboa.pt/disciplinas/AI3/2023-2024/2-semestre) course at [Instituto Superior Técnico](https://tecnico.ulisboa.pt/en/).
+
+## Table of contents
+- [General Information](#general-information)
+    - [What is Waresmart?](#what-is-waresmart)
+    - [Smart Features](#smart-features)
+- [Technical Information](#technical-information)
+    - [Used technologies](#used-technologies)
+    - [BluetoothBLE](#bluetooth-ble)
+    - [Backend](#backend)
+        - [Python Virtual Environment](#python-virtual-environment)
+        - [Reverse Proxy](#reverse-proxy)
+    - [Frontend](#frontend)
+- [Photo Gallery](#photo-gallery)
+    - [Top View](#top-view)
+    - [Front View](#front-view)
+    - [Inside View](#inside-view)
+    - [App Home Screen](#app-home-screen)
+    - [App Drawer](#app-drawer)
+
 
 ## General Information
 
@@ -26,6 +47,12 @@ WareSmart also has an integrated BLE (Bluetooth Low Energy) that won't trigger y
 - [Nginx](https://www.nginx.com/)
 - [Raspberry Pi](https://www.raspberrypi.org/)
 - [Arduino](https://www.arduino.cc/)
+
+### Bluetooth BLE
+WareSmart uses Bluetooth BLE to check for user proximity by checking the user's [RSSI](https://en.wikipedia.org/wiki/Received_signal_strength_indicator). We've implemented a script where the Raspberry Pi continiously search for nearby MAC Adresses' that correspond to the given on.
+
+```cd bluetooth```
+```bash scan.sh```
 
 ### Backend
 
@@ -79,3 +106,20 @@ server {
 - To run the aplication:
     ```$ flutter run```
 
+## Photo Gallery
+
+### Top View
+![Top View](images/top-view.jpg)
+
+### Front View
+
+![Front View](images/front-view.jpg)
+
+### Inside View
+![Inside View](images/inside.jpg)
+
+### App Home Screen
+![App Home](images/app_home.jpg)
+
+### App Drawer
+![App Drawer](images/app_drawer.jpg)
