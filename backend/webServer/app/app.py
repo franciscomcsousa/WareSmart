@@ -31,7 +31,7 @@ def toggleBLE():
     global runProximity
     data = request.get_json()
     runProximity = data.get('value')
-    print(f"run proximity: {runProximity}")
+    print(f"Toggle Proximity: {runProximity}")
     response = app.response_class(
         status = 200,
         mimetype = 'application/json'
@@ -45,7 +45,7 @@ def toggleMovement():
     global runMovement
     data = request.get_json()
     runMovement = data.get('value')
-    print(f"run movement: {runMovement}")
+    print(f"Toggle Movement: {runMovement}")
     response = app.response_class(
         status = 200,
         mimetype = 'application/json'
@@ -62,6 +62,8 @@ def sensors():
     # Check if someone is near the device
     if (runProximity):
         nearby = is_device_near()
+    if (nearby):
+        print("Movement detected, however device is nearby, aborting alert...")
     # Humidity, Temperature and Light
     data = {
         'temperature': sensors["temperature"],

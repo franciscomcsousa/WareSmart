@@ -11,7 +11,7 @@ def fetchSensors():
 	light = -1
 	movement = -1
 
-	print("Sensor read request")
+	print("--- Sensor read request ---")
 
 	while (True):
 		arduino.write(bytes("1", 'utf-8'))
@@ -39,4 +39,5 @@ def fetchSensors():
 				lastFetch = int(time.time())
 				break
 
+	print(f" Temperature: {temperature}C Humidity: {humidity}% Light: {light}% Movement: {movement}")
 	return {"temperature": temperature, "humidity": humidity, "light": light, "movement": movement}
