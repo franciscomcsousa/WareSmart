@@ -49,14 +49,14 @@ WareSmart also has an integrated BLE (Bluetooth Low Energy) that won't trigger y
 - [Arduino](https://www.arduino.cc/)
 
 ### Bluetooth BLE
-WareSmart uses Bluetooth BLE to check for user proximity by checking the user's [RSSI](https://en.wikipedia.org/wiki/Received_signal_strength_indicator). We've implemented a script where the Raspberry Pi continiously search for nearby MAC Adresses' that correspond to the given on.
+WareSmart uses Bluetooth BLE to check for user proximity by checking the user's [RSSI](https://en.wikipedia.org/wiki/Received_signal_strength_indicator). We've implemented a script where the Raspberry Pi continiously search for nearby MAC Adresses' that correspond to the given one.
 
 ```cd bluetooth```
 ```bash scan.sh```
 
 ### Backend
 
-All the backend operations are run in the Raspberry Pi.
+All the backend operations are run in the Raspberry Pi. This includes both the web server and the bluetooth proximity script.
 
 #### Python virtual environment
 
